@@ -17,7 +17,7 @@ public class MenuGrafos {
             opcao = scanner.nextInt();
 
             if (opcao == 0) {
-                System.out.println("Saindo... Obrigado por usar o sistema!");
+                System.out.println("Saindo... Obrigado!");
                 break;
             }
 
@@ -84,8 +84,10 @@ public class MenuGrafos {
             }
         } while (arquivo < 1 || arquivo > 4);
 
-        return prefixo + "_" + (arquivo - 1) + ".txt";
+        // Inclui o diretório 'dados/'
+        return "dados/" + prefixo + "_" + (arquivo - 1) + ".txt";
     }
+
 
     private static void executarOpcao(int opcao, String arquivo, Scanner scanner) {
         System.out.println("\n>>> Executando a opção " + opcao + " com o arquivo: " + arquivo);
