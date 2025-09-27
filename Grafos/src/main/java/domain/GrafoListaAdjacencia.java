@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GrafoListaAdjacencia implements Grafo {
 
@@ -30,7 +27,7 @@ public class GrafoListaAdjacencia implements Grafo {
 
     @Override
     public boolean saoAdjacentes(String v1, String v2) {
-        return listaAdj.getOrDefault(v1, new ArrayList<>()).contains(v2);
+        return listaAdj.getOrDefault(v1, Collections.emptyList()).contains(v2);
     }
 
     @Override
@@ -50,8 +47,8 @@ public class GrafoListaAdjacencia implements Grafo {
     public void adicionarAresta(String v1, String v2) {
         adicionarVertice(v1);
         adicionarVertice(v2);
-        listaAdj.get(v1).add(v2);
-        listaAdj.get(v2).add(v1);
+        if (!listaAdj.get(v1).contains(v2)) listaAdj.get(v1).add(v2);
+        if (!listaAdj.get(v2).contains(v1)) listaAdj.get(v2).add(v1);
     }
 
     @Override
@@ -64,5 +61,10 @@ public class GrafoListaAdjacencia implements Grafo {
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public List<String> getVertices() {
+        return new ArrayList<>(listaAdj.keySet());
     }
 }

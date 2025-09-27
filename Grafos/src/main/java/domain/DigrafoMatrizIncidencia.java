@@ -99,4 +99,9 @@ public class DigrafoMatrizIncidencia implements Grafo{
             System.out.println();
         }
     }
+
+    @Override
+    public List<String> getVertices() {
+        return new ArrayList<>(vertices);
+    }
 }

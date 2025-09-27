@@ -11,4 +11,5 @@ public interface Grafo {
     void removerVertice(String v);
     void adicionarAresta(String v1, String v2);
     void imprimir();
+    List<String> getVertices();
 }

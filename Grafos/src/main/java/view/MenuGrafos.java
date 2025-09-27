@@ -1,6 +1,9 @@
 package view;
 
+import domain.ConversorGrafos;
 import domain.Grafo;
+import domain.GrafoListaAdjacencia;
+import domain.GrafoMatrizAdjacencia;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -101,6 +104,37 @@ public class MenuGrafos {
             case 3 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "matriz-inc");
             case 16 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "digrafo-matriz-adj");
             case 17 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "digrafo-matriz-inc");
+            case 4 -> {
+                System.out.println("Escolha o tipo de conversão:");
+                System.out.println("1 - Matriz de Adjacência -> Lista de Adjacência");
+                System.out.println("2 - Lista de Adjacência -> Matriz de Adjacência");
+                int escolha = scanner.nextInt();
+                scanner.nextLine();
+
+                if (escolha == 1) {
+                    // lê como matriz
+                    GrafoMatrizAdjacencia matriz =
+                            (GrafoMatrizAdjacencia) LeitorGrafoNormal.lerGrafo(arquivo, "matriz-adj");
+                    matriz.imprimir();
+
+                    // converte para lista
+                    GrafoListaAdjacencia lista = ConversorGrafos.matrizParaLista(matriz);
+                    lista.imprimir();
+
+                } else if (escolha == 2) {
+                    // lê como lista
+                    GrafoListaAdjacencia lista =
+                            (GrafoListaAdjacencia) LeitorGrafoNormal.lerGrafo(arquivo, "lista");
+                    lista.imprimir();
+
+                    // converte para matriz
+                    GrafoMatrizAdjacencia matriz = ConversorGrafos.listaParaMatriz(lista);
+                    matriz.imprimir();
+
+                } else {
+                    System.out.println("Opção inválida.");
+                }
+            }
             default -> System.out.println("Opção não implementada ainda.");
         }
 
