@@ -1,11 +1,12 @@
 package domain;
 
-import util.GrafoUtils;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class GrafoMatrizIncidencia implements Grafo{
+import static util.GrafoUtils.ordenarVertices;
+
+public class DigrafoMatrizIncidencia implements Grafo{
 
     private List<String> vertices = new ArrayList<>();
     private List<String[]> arestas = new ArrayList<>();
@@ -28,8 +29,9 @@ public class GrafoMatrizIncidencia implements Grafo{
     public List<String> vizinhos(String v) {
         List<String> vizinhos = new ArrayList<>();
         for (String[] aresta : arestas) {
-            if (aresta[0].equals(v)) vizinhos.add(aresta[1]);
-            else if (aresta[1].equals(v)) vizinhos.add(aresta[0]);
+            if (aresta[0].equals(v)) {
+                vizinhos.add(aresta[1]); // só destino
+            }
         }
         return vizinhos;
     }
@@ -37,8 +39,7 @@ public class GrafoMatrizIncidencia implements Grafo{
     @Override
     public boolean saoAdjacentes(String v1, String v2) {
         for (String[] aresta : arestas) {
-            if ((aresta[0].equals(v1) && aresta[1].equals(v2)) ||
-                    (aresta[0].equals(v2) && aresta[1].equals(v1))) {
+            if (aresta[0].equals(v1) && aresta[1].equals(v2)) {
                 return true;
             }
         }
@@ -67,8 +68,8 @@ public class GrafoMatrizIncidencia implements Grafo{
 
     @Override
     public void imprimir() {
-        System.out.println("\n=== Grafo - Matriz de Incidência ===");
-        List<String> ordenados = GrafoUtils.ordenarVertices(vertices);
+        System.out.println("\n=== Dígrafo - Matriz de Incidência ===");
+        List<String> ordenados = ordenarVertices(vertices);
 
         int n = ordenados.size();
         int m = arestas.size();
@@ -76,10 +77,10 @@ public class GrafoMatrizIncidencia implements Grafo{
 
         for (int j = 0; j < m; j++) {
             String[] aresta = arestas.get(j);
-            int i1 = ordenados.indexOf(aresta[0]);
-            int i2 = ordenados.indexOf(aresta[1]);
-            matriz[i1][j] = 1;
-            matriz[i2][j] = 1;
+            int i1 = ordenados.indexOf(aresta[0]); // origem
+            int i2 = ordenados.indexOf(aresta[1]); // destino
+            matriz[i1][j] = -1; // origem
+            matriz[i2][j] = 1;  // destino
         }
 
         // cabeçalho

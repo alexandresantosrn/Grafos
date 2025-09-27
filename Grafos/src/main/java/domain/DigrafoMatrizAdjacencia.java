@@ -3,14 +3,15 @@ package domain;
 import util.GrafoUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class GrafoMatrizAdjacencia implements Grafo{
+public class DigrafoMatrizAdjacencia implements Grafo {
 
     private List<String> vertices = new ArrayList<>();
     private int[][] matriz;
 
-    public GrafoMatrizAdjacencia(int capacidadeInicial) {
+    public DigrafoMatrizAdjacencia(int capacidadeInicial) {
         matriz = new int[capacidadeInicial][capacidadeInicial];
     }
 
@@ -27,8 +28,8 @@ public class GrafoMatrizAdjacencia implements Grafo{
     public int numeroDeArestas() {
         int total = 0;
         for (int i = 0; i < vertices.size(); i++) {
-            for (int j = i+1; j < vertices.size(); j++) {
-                if (matriz[i][j] == 1) total++;
+            for (int j = 0; j < vertices.size(); j++) {
+                total += matriz[i][j];
             }
         }
         return total;
@@ -62,7 +63,6 @@ public class GrafoMatrizAdjacencia implements Grafo{
 
     @Override
     public void removerVertice(String v) {
-        // implementação simplificada: apenas remove da lista
         int idx = indice(v);
         if (idx != -1) {
             vertices.remove(v);
@@ -78,26 +78,29 @@ public class GrafoMatrizAdjacencia implements Grafo{
         adicionarVertice(v1);
         adicionarVertice(v2);
         int i = indice(v1), j = indice(v2);
-        matriz[i][j] = 1;
-        matriz[j][i] = 1; // não direcionado
+        matriz[i][j] = 1; // dirigido, não preenche simétrico
     }
 
     @Override
     public void imprimir() {
-        System.out.println("\n=== Grafo - Matriz de Adjacência ===");
+        System.out.println("\n=== Dígrafo - Matriz de Adjacência ===");
+
+        // usa método utilitário para ordenar corretamente
         List<String> ordenados = GrafoUtils.ordenarVertices(vertices);
 
+        // cabeçalho
         System.out.print("   ");
         for (String v : ordenados) {
             System.out.print(v + " ");
         }
         System.out.println();
 
+        // linhas
         for (String vi : ordenados) {
-            int i = vertices.indexOf(vi);
+            int i = vertices.indexOf(vi); // índice real na matriz
             System.out.print(vi + " ");
             for (String vj : ordenados) {
-                int j = vertices.indexOf(vj);
+                int j = vertices.indexOf(vj); // índice real na matriz
                 System.out.print(" " + matriz[i][j]);
             }
             System.out.println();

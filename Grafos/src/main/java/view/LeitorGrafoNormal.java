@@ -1,9 +1,6 @@
 package view;
 
-import domain.Grafo;
-import domain.GrafoListaAdjacencia;
-import domain.GrafoMatrizAdjacencia;
-import domain.GrafoMatrizIncidencia;
+import domain.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,8 +12,10 @@ public class LeitorGrafoNormal {
 
         switch (tipoRepresentacao.toLowerCase()) {
             case "lista" -> grafo = new GrafoListaAdjacencia();
-            case "matriz-adj" -> grafo = new GrafoMatrizAdjacencia(50); // capacidade inicial
+            case "matriz-adj" -> grafo = new GrafoMatrizAdjacencia(100);
             case "matriz-inc" -> grafo = new GrafoMatrizIncidencia();
+            case "digrafo-matriz-adj" -> grafo = new DigrafoMatrizAdjacencia(100);
+            case "digrafo-matriz-inc" -> grafo = new DigrafoMatrizIncidencia();
             default -> throw new IllegalArgumentException("Tipo de representação desconhecido: " + tipoRepresentacao);
         }
 

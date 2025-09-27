@@ -99,6 +99,8 @@ public class MenuGrafos {
             case 1 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "lista");
             case 2 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "matriz-adj");
             case 3 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "matriz-inc");
+            case 16 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "digrafo-matriz-adj");
+            case 17 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "digrafo-matriz-inc");
             default -> System.out.println("Opção não implementada ainda.");
         }
 
