@@ -1,5 +1,7 @@
 package view;
 
+import domain.Grafo;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -88,30 +90,27 @@ public class MenuGrafos {
         return "dados/" + prefixo + "_" + (arquivo - 1) + ".txt";
     }
 
-
     private static void executarOpcao(int opcao, String arquivo, Scanner scanner) {
         System.out.println("\n>>> Executando a opção " + opcao + " com o arquivo: " + arquivo);
 
-        // TESTE: leitura do arquivo e exibição do conteúdo
-        lerArquivo(arquivo);
+        Grafo grafo = null;
+
+        switch (opcao) {
+            case 1 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "lista");
+            case 2 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "matriz-adj");
+            case 3 -> grafo = LeitorGrafoNormal.lerGrafo(arquivo, "matriz-inc");
+            default -> System.out.println("Opção não implementada ainda.");
+        }
+
+        if (grafo != null) {
+            grafo.imprimir();
+            System.out.println("Número de vértices: " + grafo.numeroDeVertices());
+            System.out.println("Número de arestas: " + grafo.numeroDeArestas());
+        }
 
         // Após exibir o conteúdo, espera ENTER antes de voltar ao menu principal
         System.out.println("\nPressione ENTER para voltar ao menu principal...");
         scanner.nextLine(); // consome \n do nextInt
         scanner.nextLine(); // espera ENTER
-    }
-
-    // ===================== LEITURA DE ARQUIVOS =====================
-    private static void lerArquivo(String nomeArquivo) {
-        System.out.println("\n--- Conteúdo do arquivo " + nomeArquivo + " ---");
-        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                System.out.println(linha);
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao ler o arquivo " + nomeArquivo + ": " + e.getMessage());
-        }
-        System.out.println("--- Fim do arquivo ---\n");
     }
 }
